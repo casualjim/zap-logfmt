@@ -163,7 +163,7 @@ func TestEncoderReflected(t *testing.T) {
 	tests := []struct {
 		desc     string
 		expected string
-		value    interface{}
+		value    any
 	}{
 		{"nil", "null", nil},
 		{"error", "welp", errors.New("welp")},

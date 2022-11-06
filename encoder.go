@@ -21,7 +21,7 @@ import (
 
 var (
 	logfmtPool = sync.Pool{
-		New: func() interface{} { return &logfmtEncoder{} },
+		New: func() any { return &logfmtEncoder{} },
 	}
 	bufferpool = buffer.NewPool()
 )
@@ -107,7 +107,7 @@ func (enc *logfmtEncoder) AddObject(key string, obj zapcore.ObjectMarshaler) err
 	return enc.AppendObject(obj)
 }
 
-func (enc *logfmtEncoder) AddReflected(key string, value interface{}) error {
+func (enc *logfmtEncoder) AddReflected(key string, value any) error {
 	enc.addKey(key)
 	return enc.AppendReflected(value)
 }
@@ -234,7 +234,7 @@ func (enc *logfmtEncoder) AppendObject(obj zapcore.ObjectMarshaler) error {
 	return err
 }
 
-func (enc *logfmtEncoder) AppendReflected(value interface{}) error {
+func (enc *logfmtEncoder) AppendReflected(value any) error {
 	switch v := value.(type) {
 	case nil:
 		enc.AppendString("null")
