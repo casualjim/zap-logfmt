@@ -3,7 +3,7 @@ package zaplogfmt_test
 import (
 	"os"
 
-	zaplogfmt "github.com/sykesm/zap-logfmt"
+	zaplogfmt "github.com/casualjim/zap-logfmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

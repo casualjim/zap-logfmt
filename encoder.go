@@ -278,9 +278,9 @@ func (enc *logfmtEncoder) AppendReflected(value any) error {
 		case reflect.Map, reflect.Struct:
 			enc.AppendString(fmt.Sprint(value))
 		case reflect.Array, reflect.Slice:
-			enc.AppendArray(zapcore.ArrayMarshalerFunc(func(ae zapcore.ArrayEncoder) error {
+			_ = enc.AppendArray(zapcore.ArrayMarshalerFunc(func(ae zapcore.ArrayEncoder) error {
 				for i := 0; i < rvalue.Len(); i++ {
-					ae.AppendReflected(rvalue.Index(i).Interface())
+					_ = ae.AppendReflected(rvalue.Index(i).Interface())
 				}
 				return nil
 			}))
@@ -326,7 +326,7 @@ func (enc *logfmtEncoder) AppendUint64(value uint64) {
 
 func (enc *logfmtEncoder) Clone() zapcore.Encoder {
 	clone := enc.clone()
-	clone.buf.Write(enc.buf.Bytes())
+	_, _ = clone.buf.Write(enc.buf.Bytes())
 	return clone
 }
 
@@ -392,7 +392,7 @@ func (enc *logfmtEncoder) EncodeEntry(ent zapcore.Entry, fields []zapcore.Field)
 		if final.buf.Len() > 0 {
 			final.buf.AppendByte(' ')
 		}
-		final.buf.Write(enc.buf.Bytes())
+		_, _ = final.buf.Write(enc.buf.Bytes())
 	}
 	addFields(final, fields)
 	if ent.Stack != "" && final.StacktraceKey != "" {
@@ -464,7 +464,7 @@ func (enc *logfmtEncoder) safeAddByteString(s []byte) {
 			i++
 			continue
 		}
-		enc.buf.Write(s[i : i+size])
+		_, _ = enc.buf.Write(s[i : i+size])
 		i += size
 	}
 }

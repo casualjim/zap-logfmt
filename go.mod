@@ -1,4 +1,4 @@
-module github.com/sykesm/zap-logfmt
+module github.com/casualjim/zap-logfmt
 
 go 1.19
 
